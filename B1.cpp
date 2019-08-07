@@ -299,6 +299,8 @@ public:
             file.open(DB_Name, ios::out | ios::in);
             new_db= true;
             cout << "\n\tCREATED NEW DB...\n\n";
+        } else {
+        	cout << "\n\nopened existing DB...\n\n";
         }
         if(!file) {
             cout << "\n\tError opening file- " << DB_Name << "\n";
@@ -517,6 +519,10 @@ public:
         getNodeFileName(fileName, currentNode);
 
         Heaper* h= new Heaper(fileName);
+        if(currentNode == 0 && h->readLength() == 1) {
+        	setMinKey(key, currentNode);
+        	setMaxKey(key, currentNode);
+        }
         if(h->readLength() < MAX_ROLL_IN_FILE) {
             h->insert(key);
             int min= getMinKey(currentNode);
